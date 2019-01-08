@@ -22,7 +22,7 @@ public interface UserService {
      * @Param [name]
      * @return com.inchwisp.tale.system.model.User 
      **/       
-    User login(String account,String phone);
+    User findByAccountOrPhone(String account,String phone);
 
     Page<User> search(String name, Pageable pageable);
 

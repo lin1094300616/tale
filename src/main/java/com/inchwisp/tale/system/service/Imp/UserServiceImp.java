@@ -32,7 +32,7 @@ public class UserServiceImp implements UserService {
      * @return com.inchwisp.tale.system.model.User 
      **/       
     @Override
-    public User login(String account,String phone) {
+    public User findByAccountOrPhone(String account,String phone) {
         return userRepository.findByAccountOrPhone(account,phone);
     }
 

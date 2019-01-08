@@ -1,6 +1,5 @@
 package com.inchwisp.tale.system.controller;
 
-import com.alibaba.fastjson.JSONArray;
 import com.inchwisp.tale.framework.configurer.Permission;
 import com.inchwisp.tale.framework.entity.*;
 import com.inchwisp.tale.framework.util.CommUtil;
@@ -45,11 +44,11 @@ public class UserController {
         String account = data.getString("account");
         String phone = data.getString("phone");
         String password = data.getString("password");
-        if (CommUtil.isNullString(account,password)) {
+        if (CommUtil.isNullString(password)) {
             return Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9002.getCode(),StatusEnum.SYSTEM_ERROR_9002.getData());
         }
         //2、查询数据库，获得用户信息
-        User user = userService.login(account,phone);
+        User user = userService.findByAccountOrPhone(account,phone);
         //3、判断用户信息————不存在，用户被禁用，密码不正确
         if (user == null) {
             return Response.factoryResponse(StatusEnum.USER_Error_1005.getCode(),StatusEnum.USER_Error_1005.getData());
@@ -103,7 +102,7 @@ public class UserController {
             return Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9002.getCode(),StatusEnum.SYSTEM_ERROR_9002.getData());
         }
         //3、验证用户是否可以注册
-        User user = userService.login(account,phone);
+        User user = userService.findByAccountOrPhone(account,phone);
         //3.1用户名已存在
         if (user.getAccount().equals(account)) {
             return Response.factoryResponse(StatusEnum.USER_Error_1004.getCode(),StatusEnum.USER_Error_1004.getData());

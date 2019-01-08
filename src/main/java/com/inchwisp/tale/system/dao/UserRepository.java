@@ -22,5 +22,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Query(value = "select user from User as user where user.name like CONCAT('%',:name,'%')")
     Page<User> findByNameLike(@Param("name") String name, Pageable pageable);
 
+   // @Query(value = "SELECT user FROM User AS user WHERE user.account = keyword OR  user.phone = keyword")
     User findByAccountOrPhone(String account,String phone);
 }
