@@ -18,7 +18,7 @@ import java.util.Optional;
  * @Date: 2019/1/2 14:21
  * @Vresion: 1.0.0
  **/
-@Service
+@Service //表示这是一个service
 public class UserServiceImp implements UserService {
 
     @Autowired
@@ -26,7 +26,7 @@ public class UserServiceImp implements UserService {
 
     /**
      * @Author MSI
-     * @Description 登陆
+     * @Description 根据用户名或者电话号码查询是否存在此用户
      * @Date 2019/1/3 15:58
      * @Param [name]
      * @return com.inchwisp.tale.system.model.User 
@@ -36,10 +36,17 @@ public class UserServiceImp implements UserService {
         return userRepository.findByAccountOrPhone(account,phone);
     }
 
+    /**
+     * @Author MSI
+     * @Description 根据用户名模糊分页查询方法
+     * @Content: TODO
+     * @Date 2019/1/9 10:38
+     * @Param [name, pageable]
+     * @return org.springframework.data.domain.Page<com.inchwisp.tale.system.model.User> 
+     **/       
     @Override
     public Page<User> search(String name, Pageable pageable) {
-        Page<User> userPage = userRepository.findByNameLike(name,pageable);
-        return userPage;
+        return userRepository.findByNameLike(name,pageable);
     }
 
     @Override

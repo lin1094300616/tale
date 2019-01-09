@@ -17,8 +17,8 @@ public interface UserService {
 
     /**
      * @Author MSI
-     * @Description 登陆
-     * @Date 2019/1/3 15:58
+     * @Description 根据用户名或者电话号码查询是否存在此用户
+     * @Date 2019/1/9 8：59
      * @Param [name]
      * @return com.inchwisp.tale.system.model.User 
      **/       
