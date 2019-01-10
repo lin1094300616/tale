@@ -25,17 +25,17 @@ public class CommUtil {
         return false;
     }
 
-    //
     /**
      * @Author MSI
      * @Description 判断String 类型是否有空字符串，如果有就返回true，没有就返回false
-     * @Date 2018/12/23 18:09
+     * @Content  调整算法判断顺序，修复bug
+     * @Date 2019/1/9 18:49
      * @Param [values]
      * @return boolean 
      **/        
     public static boolean isNullString(String...values) {
         for (int i = 0; i < values.length; i++) {
-            if ("".equals(values[i].trim()) || values == null) {
+            if (values[i] == null || "".equals(values[i].trim()) ) {
                 return true;
             }
         }
