@@ -22,6 +22,7 @@ public class PageUtil {
     public static JSONObject pageInfo(Page page) {
         JSONObject result = new JSONObject();
         JSONObject jsonObject = new JSONObject();
+        //封装分页信息
         jsonObject.put("totalElements",page.getTotalElements()); //总条目数
         jsonObject.put("totalPages",page.getTotalPages()); //总页数
         jsonObject.put("size",page.getSize()); //本页条数

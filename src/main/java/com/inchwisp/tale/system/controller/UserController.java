@@ -51,13 +51,13 @@ public class UserController {
         User user = userService.findByAccountOrPhone(account,phone);
         //3、判断用户信息————不存在，用户被禁用，密码不正确
         if (user == null) {
-            return Response.factoryResponse(StatusEnum.USER_Error_1005.getCode(),StatusEnum.USER_Error_1005.getData());
+            return Response.factoryResponse(StatusEnum.USER_ERROR_1005.getCode(),StatusEnum.USER_ERROR_1005.getData());
         }
         if (user.getIsEnabled() == ConstantsEnum.ACCOUNT_STATUS_INVALID.getValue()) {
-            return Response.factoryResponse(StatusEnum.USER_Error_1002.getCode(),StatusEnum.USER_Error_1002.getData());
+            return Response.factoryResponse(StatusEnum.USER_ERROR_1002.getCode(),StatusEnum.USER_ERROR_1002.getData());
         }
         if (!user.getPassword().equals(MD5Util.MD5(password))) {
-            return Response.factoryResponse(StatusEnum.USER_Error_1001.getCode(),StatusEnum.USER_Error_1001.getData());
+            return Response.factoryResponse(StatusEnum.USER_ERROR_1001.getCode(),StatusEnum.USER_ERROR_1001.getData());
         }
         //4、验证成功，用户信息写入session
         session.setAttribute("user",user);
@@ -105,11 +105,11 @@ public class UserController {
         User user = userService.findByAccountOrPhone(account,phone);
         //3.1用户名已存在
         if (user.getAccount().equals(account)) {
-            return Response.factoryResponse(StatusEnum.USER_Error_1004.getCode(),StatusEnum.USER_Error_1004.getData());
+            return Response.factoryResponse(StatusEnum.USER_ERROR_1004.getCode(),StatusEnum.USER_ERROR_1004.getData());
         }
         //3.2两次输入密码不一致
         if (!password.equals(passwordRetry)) {
-            return Response.factoryResponse(StatusEnum.USER_Error_1003.getCode(),StatusEnum.USER_Error_1003.getData());
+            return Response.factoryResponse(StatusEnum.USER_ERROR_1003.getCode(),StatusEnum.USER_ERROR_1003.getData());
         }
         //3、数据封装
         user.setAccount(account);
@@ -117,7 +117,7 @@ public class UserController {
         user.setName(name);
         user.setPhone(phone);
         user.setEmail(email);
-        user.setRoleId(ConstantsEnum.USER_ROLE_USER.getValue());
+        //user.setRoleId(ConstantsEnum.USER_ROLE_USER.getValue());
         user.setRoleName(ConstantsEnum.USER_ROLE_USER.getData());
         //4、调用Service，新增用户
         try {
@@ -145,14 +145,14 @@ public class UserController {
         String name = data.getString("name");
         String phone = data.getString("phone");
         String email = data.getString("email");
-        Integer roleId = data.getInteger("roleId");
+        //Integer roleId = data.getInteger("roleId");
         String roleName = data.getString("roleName");
         //2、判断，验证数据完整性
-        if (CommUtil.isNullValue(roleId) || CommUtil.isNullString(account,password,passwordRetry,name,phone)) {
+        if (CommUtil.isNullString(account,password,passwordRetry,name,phone)) {
             return Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9002.getCode(),StatusEnum.SYSTEM_ERROR_9002.getData());
         }
         if (!password.equals(passwordRetry)) {
-            return Response.factoryResponse(StatusEnum.USER_Error_1003.getCode(),StatusEnum.USER_Error_1003.getData());
+            return Response.factoryResponse(StatusEnum.USER_ERROR_1003.getCode(),StatusEnum.USER_ERROR_1003.getData());
         }
         //3、数据封装
         User user = new User();
@@ -161,7 +161,7 @@ public class UserController {
         user.setName(name);
         user.setPhone(phone);
         user.setEmail(email);
-        user.setRoleId(roleId);
+        //user.setRoleId(roleId);
         user.setRoleName(roleName);
         //4、调用Service，新增用户
         try {
@@ -190,7 +190,7 @@ public class UserController {
         //2、判断用户是否存在
         User user = userService.findById(id);
         if (user == null) {
-            return  Response.factoryResponse(StatusEnum.USER_Error_1005.getCode(),StatusEnum.USER_Error_1005.getData());
+            return  Response.factoryResponse(StatusEnum.USER_ERROR_1005.getCode(),StatusEnum.USER_ERROR_1005.getData());
         }
         //3、删除用户
         try {
@@ -218,10 +218,10 @@ public class UserController {
         String name = data.getString("name");
         String phone = data.getString("phone");
         String email = data.getString("email");
-        Integer roleId = data.getInteger("roleId");
+        //Integer roleId = data.getInteger("roleId");
         String roleName = data.getString("roleName");
         //2、判断，验证数据完整性
-        if (CommUtil.isNullValue(id,roleId) || CommUtil.isNullString(account,password,name)) {
+        if (CommUtil.isNullValue(id) || CommUtil.isNullString(account,password,name)) {
             return  Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9002.getCode(),StatusEnum.SYSTEM_ERROR_9002.getData());
         }
         //3、数据封装
@@ -232,7 +232,7 @@ public class UserController {
         user.setName(name);
         user.setPhone(phone);
         user.setEmail(email);
-        user.setRoleId(roleId);
+        //user.setRoleId(roleId);
         user.setRoleName(roleName);
         //4、调用Service，新增用户
         try {
@@ -259,7 +259,7 @@ public class UserController {
         //2、判断用户是否存在
         User user = userService.findById(id);
         if (user == null) {
-            return Response.factoryResponse(StatusEnum.USER_Error_1005.getCode(),StatusEnum.USER_Error_1005.getData());
+            return Response.factoryResponse(StatusEnum.USER_ERROR_1005.getCode(),StatusEnum.USER_ERROR_1005.getData());
         }
         return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),user);
     }

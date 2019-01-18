@@ -27,7 +27,7 @@ public class User {
     private String email; //邮箱
     private Integer isEnabled = ConstantsEnum.ACCOUNT_STATUS_VALID.getValue(); //是否可用
     private Integer isOnline = ConstantsEnum.ACCOUNT_IS_OFFLINE.getValue(); //是否在线
-    private Integer roleId = ConstantsEnum.USER_ROLE_USER.getValue(); //角色id
+    //private Integer roleId = ConstantsEnum.USER_ROLE_USER.getValue(); //角色id
     private String roleName = ConstantsEnum.USER_ROLE_USER.getData(); //角色名
 
 /*
@@ -90,14 +90,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
     }
 
     public Integer getIsEnabled() {
