@@ -30,6 +30,7 @@ public class MVCConfig extends WebMvcConfigurerAdapter {
                 .excludePathPatterns("/error")
                 .excludePathPatterns("/login")
                 .excludePathPatterns("/loginOut")
+                .excludePathPatterns("/register")
                 .excludePathPatterns("/test")//默认不拦截路径
                 .addPathPatterns("/**"); //拦截所有路径
     }

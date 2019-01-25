@@ -13,7 +13,7 @@ import java.util.Optional;
 
 /**
  * @ClassName: UserServiceImp
- * @Description: TODO
+ * @Description: 用户模块服务层实现类
  * @Author: MSI
  * @Date: 2019/1/2 14:21
  * @Vresion: 1.0.0
@@ -36,17 +36,9 @@ public class UserServiceImp implements UserService {
         return userRepository.findByAccountOrPhone(account,phone);
     }
 
-    /**
-     * @Author MSI
-     * @Description 根据用户名模糊分页查询方法
-     * @Content: TODO
-     * @Date 2019/1/9 10:38
-     * @Param [name, pageable]
-     * @return org.springframework.data.domain.Page<com.inchwisp.tale.system.model.User> 
-     **/       
     @Override
-    public Page<User> search(String name, Pageable pageable) {
-        return userRepository.findByNameLike(name,pageable);
+    public Page<User> pageUser(String name, Pageable pageable) {
+        return userRepository.findAllByNameContaining(name,pageable);
     }
 
     @Override
@@ -61,9 +53,9 @@ public class UserServiceImp implements UserService {
 
     @Override
     public User findById(long id) {
-        Optional<User> optionalUser = userRepository.findById(id);
+        Optional<User> optionalUser = userRepository.findById(id); //findById方法会固定返回一个Optional对象，需要验证里面是否存在
         if (optionalUser.isPresent()) {
-            return optionalUser.get();
+            return optionalUser.get();  //用户数据存在，返回查找到的数据
         }
         return null;
     }
@@ -72,6 +64,5 @@ public class UserServiceImp implements UserService {
     public List<User> findAll() {
         return userRepository.findAll();
     }
-
 
 }

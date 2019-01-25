@@ -24,7 +24,7 @@ public interface UserService {
      **/       
     User findByAccountOrPhone(String account,String phone);
 
-    Page<User> search(String name, Pageable pageable);
+    Page<User> pageUser(String name, Pageable pageable);
 
     void saveUser(User user);
 

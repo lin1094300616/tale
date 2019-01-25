@@ -3,6 +3,7 @@ package com.inchwisp.tale.system.model;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inchwisp.tale.framework.entity.ConstantsEnum;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,8 +17,21 @@ import java.util.List;
  **/
 @Entity
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
+@Table(name = "user")
 public class User {
-    @Id@GeneratedValue
+
+    //@Id    @GeneratedValue()
+    //@Column(name="id",length = 8)
+    @Id
+    @TableGenerator(name="USER_GENERATOR",
+                    table="PK_GENERATOR",
+                    pkColumnName="PK_COLUMN",
+                    pkColumnValue="user",
+                    valueColumnName="PK_VALUE",
+                    initialValue=1000000,
+                    allocationSize=1
+    )
+    @GeneratedValue(strategy=GenerationType.TABLE, generator="USER_GENERATOR")
     private Long id; //id
     private String account; //用户名
     @JSONField(serialize = false)
@@ -27,22 +41,7 @@ public class User {
     private String email; //邮箱
     private Integer isEnabled = ConstantsEnum.ACCOUNT_STATUS_VALID.getValue(); //是否可用
     private Integer isOnline = ConstantsEnum.ACCOUNT_IS_OFFLINE.getValue(); //是否在线
-    //private Integer roleId = ConstantsEnum.USER_ROLE_USER.getValue(); //角色id
     private String roleName = ConstantsEnum.USER_ROLE_USER.getData(); //角色名
-
-/*
-    @JSONField(serialize = false)
-    @OneToMany(targetEntity = Role.class,fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private List<Role> roleList;
-
-    public List<Role> getRoleList() {
-        return roleList;
-    }
-
-    public void setRoleList(List<Role> roleList) {
-        this.roleList = roleList;
-    }
-*/
 
     public Long getId() {
         return id;

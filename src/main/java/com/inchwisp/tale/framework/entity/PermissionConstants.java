@@ -10,4 +10,5 @@ package com.inchwisp.tale.framework.entity;
 public class PermissionConstants {
     public static final String USER_ROLE_ADMIN = "管理员";
     public static final String USER_ROLE_USER = "普通用户";
+
 }

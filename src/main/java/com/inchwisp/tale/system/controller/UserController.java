@@ -102,9 +102,8 @@ public class UserController {
             return Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9002.getCode(),StatusEnum.SYSTEM_ERROR_9002.getData());
         }
         //3、验证用户是否可以注册
-        User user = userService.findByAccountOrPhone(account,phone);
-        //3.1用户名已存在
-        if (user.getAccount().equals(account)) {
+        //3.1用户已存在
+        if (userService.findByAccountOrPhone(account,phone) != null) {
             return Response.factoryResponse(StatusEnum.USER_ERROR_1004.getCode(),StatusEnum.USER_ERROR_1004.getData());
         }
         //3.2两次输入密码不一致
@@ -112,12 +111,12 @@ public class UserController {
             return Response.factoryResponse(StatusEnum.USER_ERROR_1003.getCode(),StatusEnum.USER_ERROR_1003.getData());
         }
         //3、数据封装
+        User user = new User();
         user.setAccount(account);
         user.setPassword(MD5Util.MD5(password));//密码进行MD5加密
         user.setName(name);
         user.setPhone(phone);
         user.setEmail(email);
-        //user.setRoleId(ConstantsEnum.USER_ROLE_USER.getValue());
         user.setRoleName(ConstantsEnum.USER_ROLE_USER.getData());
         //4、调用Service，新增用户
         try {
@@ -145,7 +144,6 @@ public class UserController {
         String name = data.getString("name");
         String phone = data.getString("phone");
         String email = data.getString("email");
-        //Integer roleId = data.getInteger("roleId");
         String roleName = data.getString("roleName");
         //2、判断，验证数据完整性
         if (CommUtil.isNullString(account,password,passwordRetry,name,phone)) {
@@ -161,7 +159,6 @@ public class UserController {
         user.setName(name);
         user.setPhone(phone);
         user.setEmail(email);
-        //user.setRoleId(roleId);
         user.setRoleName(roleName);
         //4、调用Service，新增用户
         try {
@@ -285,12 +282,16 @@ public class UserController {
      * @Param [size, page, name]
      * @return com.inchwisp.tale.framework.entity.Response 
      **/       
-    @GetMapping("/user/{size}/{page}")
+    @GetMapping("/user/list")
     @Permission(PermissionConstants.USER_ROLE_ADMIN)
-    public Response searchUser(@PathVariable int size, @PathVariable int page, @RequestParam("name") String name) {
+    public Response searchUser(@RequestParam(value = "page") Integer page,
+                               @RequestParam(value = "size") Integer size,
+                               @RequestParam(value = "name") String name) {
+        page = CommUtil.isNullValue(page) ? ConstantsEnum.PAGE_DEFT : page;
+        size = CommUtil.isNullValue(size) ? ConstantsEnum.SIZE_DEFT : size;
         Pageable pageable = PageRequest.of(page-1, size, Sort.by(Sort.Direction.ASC, "id"));
-        Page<User> userPage = userService.search(name,pageable);
-        JSONObject data = PageUtil.pageInfo(userPage);
+        Page<User> directorPage = userService.pageUser(name,pageable);
+        JSONObject data = PageUtil.pageInfo(directorPage);
         return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),data);
     }
 

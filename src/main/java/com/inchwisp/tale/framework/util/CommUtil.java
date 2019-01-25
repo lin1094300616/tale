@@ -42,7 +42,4 @@ public class CommUtil {
         return false;
     }
 
-
-
-
 }
