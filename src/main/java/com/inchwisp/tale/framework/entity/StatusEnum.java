@@ -33,8 +33,6 @@ public enum StatusEnum {
 
     PERFORMER_ERROR_4001("4001","演员已存在"),PERFORMER_ERROR_4002("4002","演员不存在"),
     PERFORMER_ERROR_4003("4003","上传演员图片异常"),PERFORMER_ERROR_4004("",""),
-
-    CAIPING_ERROR_5001("5001","菜品不存在"),
     ;
 
     private String code;
