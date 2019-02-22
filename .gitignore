@@ -20,6 +20,7 @@
 mvnw
 mvnw.cmd
 /.mvn/
+/upload
 ### NetBeans ###
 /nbproject/private/
 /build/

@@ -47,7 +47,7 @@ public class DirectorServiceImp implements DirectorService {
 
     /**
      * @Author MSI
-     * @Description 删除导演的同时需要删除此导演的照片，置空此导演关联的电影
+     * @Description 删除导演的之前需要删除此导演的照片，置空此导演关联的电影
      * @Content: TODO
      * @Date 2019/1/25 10:54
      * @Param [director]

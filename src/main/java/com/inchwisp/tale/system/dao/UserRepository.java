@@ -19,8 +19,24 @@ import org.springframework.stereotype.Repository;
 @Repository //Repository注解，表示这个类是一个持久层类（DAO），用于与数据库交互
 public interface UserRepository extends JpaRepository<User,Long> {
 
+    /**
+     * @Author MSI
+     * @Description 根据用户姓名模糊分页查询
+     * @Content: TODO
+     * @Date 2019/2/7 20:10
+     * @Param [name, pageable]
+     * @return org.springframework.data.domain.Page<com.inchwisp.tale.system.model.User> 
+     **/       
     Page<User> findAllByNameContaining(@Param("name") String name, Pageable pageable);
 
+    /**
+     * @Author MSI
+     * @Description 查询用户账号和手机号码是否存在
+     * @Content: TODO
+     * @Date 2019/2/7 20:10
+     * @Param [account, phone]
+     * @return com.inchwisp.tale.system.model.User 
+     **/       
     //@Query(value = "SELECT user FROM User AS user WHERE user.account = keyword OR  user.phone = keyword")
     User findByAccountOrPhone(String account,String phone);
 }

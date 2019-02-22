@@ -32,9 +32,9 @@ public class CommUtil {
      * @Date 2019/1/9 18:49
      * @Param [values]
      * @return boolean 
-     **/        
+     **/
     public static boolean isNullString(String...values) {
-        for (int i = 0; i < values.length; i++) {
+        for (int i = 0; i < values.length; i++) {// 1.字符串为空， 2.空字符串
             if (values[i] == null || "".equals(values[i].trim()) ) {
                 return true;
             }

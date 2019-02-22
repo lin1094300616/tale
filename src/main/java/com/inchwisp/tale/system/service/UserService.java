@@ -24,6 +24,14 @@ public interface UserService {
      **/       
     User findByAccountOrPhone(String account,String phone);
 
+    /**
+     * @Author MSI
+     * @Description 分页查询
+     * @Content: TODO
+     * @Date 2019/2/7 20:02
+     * @Param [name, pageable]
+     * @return org.springframework.data.domain.Page<com.inchwisp.tale.system.model.User>
+     **/
     Page<User> pageUser(String name, Pageable pageable);
 
     void saveUser(User user);
@@ -32,5 +40,13 @@ public interface UserService {
 
     User findById(long id);
 
+    /**
+     * @Author MSI
+     * @Description 列表查询
+     * @Content: TODO
+     * @Date 2019/2/7 20:03
+     * @Param []
+     * @return java.util.List<com.inchwisp.tale.system.model.User>
+     **/
     List<User> findAll();
 }

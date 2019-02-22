@@ -6,28 +6,24 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @ClassName: Director
+ * @ClassName: Performer
  * @Description: TODO
  * @Author: MSI
- * @Date: 2019/1/18 14:57
+ * @Date: 2019/1/30 11:05
  * @Vresion: 1.0.0
  **/
 @Entity
-@Table(name = "director")
-public class Director {
-
-    //@Id @GeneratedValue()
-    //@Column(length = 8)
+public class Performer {
     @Id
-    @TableGenerator(name="DIRECTOR_GENERATOR",
+    @TableGenerator(name="PERFORMER_GENERATOR",
             table="PK_GENERATOR",
             pkColumnName="PK_COLUMN",
-            pkColumnValue="director",
+            pkColumnValue="performer",
             valueColumnName="PK_VALUE",
-            initialValue=3000000,
+            initialValue=4000000,
             allocationSize=1
     )
-    @GeneratedValue(strategy=GenerationType.TABLE, generator="DIRECTOR_GENERATOR")
+    @GeneratedValue(strategy= GenerationType.TABLE, generator="PERFORMER_GENERATOR")
     private Long id; //主键
     private String name; //姓名
     @Column(length = 1)
@@ -42,8 +38,9 @@ public class Director {
     //@Column(columnDefinition = "TEXT",nullable = true)
     @Column(length = 5000)
     private String introduction; //简介
-    @OneToMany(mappedBy = "director")
-    private List<Movie> movies; //关联电影集合
+
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY,mappedBy = "performers")
+    private List<Movie> movies; //电影集合
 
     public Long getId() {
         return id;

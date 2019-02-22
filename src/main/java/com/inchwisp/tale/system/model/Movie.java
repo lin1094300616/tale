@@ -1,12 +1,12 @@
 package com.inchwisp.tale.system.model;
 
 import javax.persistence.*;
-import java.sql.Blob;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @ClassName: Movie
- * @Description: TODO
+ * @Description: 电影实体模型类
  * @Author: MSI
  * @Date: 2019/1/18 15:16
  * @Vresion: 1.0.0
@@ -28,14 +28,34 @@ public class Movie {
     )
     @GeneratedValue(strategy=GenerationType.TABLE, generator="USER_GENERATOR")
     private Long id;
-    private String name;
-    private String alias;
-    private String region;
-    private Date releaseDate;
-    private String image;
-    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY,optional = false)
-    @JoinColumn(name = "director_id")
-    private Director director;
+    private String name; //名称
+    private String alias; //别名
+    private String region; //地区
+    private String language; //语言
+    private String tag; //标签
+    private String image;//海报地址
+    private String introduction; //简介
+    private String resource; //资源链接
+    @Column(precision = 1, scale = 2)
+    private float score; //评分
+
+    @Temporal(TemporalType.TIME)
+    private Date lasts; //片长
+    @Temporal(TemporalType.DATE)
+    private Date releaseDate; //上映时间
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createTime; //上架时间
+
+    @ManyToOne(cascade = CascadeType.REFRESH,fetch = FetchType.EAGER,optional = true)
+    private Director director; //关联导演ID
+
+    /*@JoinTable(
+            name = "movie_performer",
+            joinColumns = {@JoinColumn(name = "movie",referencedColumnName = "performer")},
+            inverseJoinColumns = {@JoinColumn(name = "performer",referencedColumnName = "movie")}
+    )*/
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
+    private List<Performer> performers; //演员ID，多对多
 
     public Long getId() {
         return id;
@@ -69,12 +89,20 @@ public class Movie {
         this.region = region;
     }
 
-    public Date getReleaseDate() {
-        return releaseDate;
+    public String getLanguage() {
+        return language;
     }
 
-    public void setReleaseDate(Date releaseDate) {
-        this.releaseDate = releaseDate;
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     public String getImage() {
@@ -85,11 +113,67 @@ public class Movie {
         this.image = image;
     }
 
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+    public String getResource() {
+        return resource;
+    }
+
+    public void setResource(String resource) {
+        this.resource = resource;
+    }
+
+    public float getScore() {
+        return score;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
+    }
+
+    public Date getLasts() {
+        return lasts;
+    }
+
+    public void setLasts(Date lasts) {
+        this.lasts = lasts;
+    }
+
+    public Date getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     public Director getDirector() {
         return director;
     }
 
     public void setDirector(Director director) {
         this.director = director;
+    }
+
+    public List<Performer> getPerformers() {
+        return performers;
+    }
+
+    public void setPerformers(List<Performer> performers) {
+        this.performers = performers;
     }
 }

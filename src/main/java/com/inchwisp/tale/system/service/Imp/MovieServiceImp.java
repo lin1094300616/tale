@@ -4,6 +4,8 @@ import com.inchwisp.tale.system.dao.MovieRepository;
 import com.inchwisp.tale.system.model.Movie;
 import com.inchwisp.tale.system.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +23,11 @@ public class MovieServiceImp implements MovieService {
 
     @Autowired
     MovieRepository movieRepository;
+
+    @Override
+    public Page<Movie> pageMovie(String name, Pageable pageable) {
+        return movieRepository.searchByNameORAlias(name,pageable);
+    }
 
     @Override
     public void save(Movie movie) {

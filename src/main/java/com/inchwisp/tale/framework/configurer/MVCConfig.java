@@ -18,7 +18,7 @@ public class MVCConfig extends WebMvcConfigurerAdapter {
 
     /**
      * @Author MSI
-     * @Description 添加过滤器方法
+     * @Description 添加拦截器方法
      * @Date 2019/1/7 10:37
      * @Param [registry]
      * @return void

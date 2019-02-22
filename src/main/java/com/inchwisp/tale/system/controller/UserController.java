@@ -28,7 +28,7 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    @Autowired //Spring自动装配
+    @Autowired //Spring自动装配  Controller Service Dao Bean
     UserService userService; //注入userService
 
     /**
@@ -149,7 +149,7 @@ public class UserController {
         if (CommUtil.isNullString(account,password,passwordRetry,name,phone)) {
             return Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9002.getCode(),StatusEnum.SYSTEM_ERROR_9002.getData());
         }
-        if (!password.equals(passwordRetry)) {
+        if (!password.equals(passwordRetry)) { //密码不一致
             return Response.factoryResponse(StatusEnum.USER_ERROR_1003.getCode(),StatusEnum.USER_ERROR_1003.getData());
         }
         //3、数据封装
@@ -166,7 +166,7 @@ public class UserController {
         }catch (Exception e){
             return  Response.factoryResponse(StatusEnum.RET_INSERT_FAIL.getCode(),StatusEnum.RET_INSERT_FAIL.getData());
         }
-        return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
+        return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),user);
     }
 
     /**
@@ -195,7 +195,7 @@ public class UserController {
         }catch (Exception e){
             return  Response.factoryResponse(StatusEnum.RET_DELETE_FAIL.getCode(),StatusEnum.RET_DELETE_FAIL.getData());
         }
-        return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
+        return  Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),user);
     }
 
     /**
@@ -231,7 +231,7 @@ public class UserController {
         user.setEmail(email);
         //user.setRoleId(roleId);
         user.setRoleName(roleName);
-        //4、调用Service，新增用户
+        //4、调用Service，修改用户
         try {
             userService.saveUser(user);
         }catch (Exception e){
@@ -259,6 +259,7 @@ public class UserController {
             return Response.factoryResponse(StatusEnum.USER_ERROR_1005.getCode(),StatusEnum.USER_ERROR_1005.getData());
         }
         return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),user);
+
     }
 
     /**
@@ -289,9 +290,10 @@ public class UserController {
                                @RequestParam(value = "name") String name) {
         page = CommUtil.isNullValue(page) ? ConstantsEnum.PAGE_DEFT : page;
         size = CommUtil.isNullValue(size) ? ConstantsEnum.SIZE_DEFT : size;
+        //分页参数                              页码，每页多少条，  排序
         Pageable pageable = PageRequest.of(page-1, size, Sort.by(Sort.Direction.ASC, "id"));
-        Page<User> directorPage = userService.pageUser(name,pageable);
-        JSONObject data = PageUtil.pageInfo(directorPage);
+        Page<User> userPage = userService.pageUser(name,pageable);
+        JSONObject data = PageUtil.pageInfo(userPage);
         return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),data);
     }
 

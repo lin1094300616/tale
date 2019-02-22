@@ -81,7 +81,6 @@ public class DirectorController {
             return Response.factoryResponse(StatusEnum.RET_INSERT_FAIL.getCode(),StatusEnum.RET_INSERT_FAIL.getData());
         }
         return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
-
     }
 
     /**
@@ -200,8 +199,8 @@ public class DirectorController {
      **/
     @GetMapping("/director/list")
     public Response searchDirector(@RequestParam(value = "page") Integer page,
-                               @RequestParam(value = "size") Integer size,
-                               @RequestParam(value = "name") String name) {
+                                   @RequestParam(value = "size") Integer size,
+                                   @RequestParam(value = "name") String name) {
         page = CommUtil.isNullValue(page) ? ConstantsEnum.PAGE_DEFT : page;
         size = CommUtil.isNullValue(size) ? ConstantsEnum.SIZE_DEFT : size;
         Pageable pageable = PageRequest.of(page-1, size, Sort.by(Sort.Direction.ASC, "id"));
