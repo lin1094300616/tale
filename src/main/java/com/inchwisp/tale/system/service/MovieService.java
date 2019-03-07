@@ -15,7 +15,7 @@ import java.util.List;
  **/
 public interface MovieService {
 
-
+    Movie findMovieByName(String name);
 
     Page<Movie> pageMovie(String name, Pageable pageable);
 

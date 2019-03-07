@@ -46,4 +46,6 @@ public interface MovieRepository extends JpaRepository<Movie,Long> {
     @Transactional(rollbackFor = Exception.class)
     @Query("update Movie movie set movie.director = null where movie.director = ?1")
     void updateOnDirector(Long directorId);
+
+    Movie findMovieByName(String name);
 }

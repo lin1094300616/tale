@@ -11,8 +11,6 @@ public enum ConstantsEnum {
 
     TOKEN_TIMEOUT_MINUTES(5,"登陆有效时间"),
 
-    USER_ROLE_ADMIN(1,"管理员"),USER_ROLE_USER(2,"普通用户"),
-
     ACCOUNT_STATUS_VALID(1,"可用"),ACCOUNT_STATUS_INVALID(0,"禁用"),
     ACCOUNT_IS_ONLINE(1,"在线"),ACCOUNT_IS_OFFLINE(0,"离线");
 

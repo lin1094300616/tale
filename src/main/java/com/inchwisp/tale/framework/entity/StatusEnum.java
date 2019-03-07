@@ -32,7 +32,7 @@ public enum StatusEnum {
     DIRECTOR_ERROR_3005("",""),DIRECTOR_ERROR_3006("",""),
 
     PERFORMER_ERROR_4001("4001","演员已存在"),PERFORMER_ERROR_4002("4002","演员不存在"),
-    PERFORMER_ERROR_4003("4003","上传演员图片异常"),PERFORMER_ERROR_4004("",""),
+    PERFORMER_ERROR_4003("4003","关联演员不正确"),PERFORMER_ERROR_4004("",""),
     ;
 
     private String code;

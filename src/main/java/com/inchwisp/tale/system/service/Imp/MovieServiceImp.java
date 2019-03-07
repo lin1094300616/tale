@@ -24,6 +24,19 @@ public class MovieServiceImp implements MovieService {
     @Autowired
     MovieRepository movieRepository;
 
+    /**
+     * @Author MSI
+     * @Description 查询电影是否存在
+     * @Content: TODO
+     * @Date 2019/3/6 21:17
+     * @Param [name]
+     * @return com.inchwisp.tale.system.model.Movie 
+     **/       
+    @Override
+    public Movie findMovieByName(String name) {
+        return movieRepository.findMovieByName(name);
+    }
+
     @Override
     public Page<Movie> pageMovie(String name, Pageable pageable) {
         return movieRepository.searchByNameORAlias(name,pageable);

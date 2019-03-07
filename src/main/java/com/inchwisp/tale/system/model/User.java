@@ -3,6 +3,7 @@ package com.inchwisp.tale.system.model;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.inchwisp.tale.framework.entity.ConstantsEnum;
+import com.inchwisp.tale.framework.entity.PermissionConstants;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -41,7 +42,7 @@ public class User {
     private String email; //邮箱
     private Integer isEnabled = ConstantsEnum.ACCOUNT_STATUS_VALID.getValue(); //是否可用
     private Integer isOnline = ConstantsEnum.ACCOUNT_IS_OFFLINE.getValue(); //是否在线
-    private String roleName = ConstantsEnum.USER_ROLE_USER.getData(); //角色名
+    private String roleName = PermissionConstants.USER_ROLE_USER; //角色名
 
     public Long getId() {
         return id;

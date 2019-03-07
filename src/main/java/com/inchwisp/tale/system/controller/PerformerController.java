@@ -126,12 +126,17 @@ public class PerformerController {
         if (CommUtil.isNullValue(id) || CommUtil.isNullString(name,sex,nationality)) {
             return Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9002.getCode(),StatusEnum.SYSTEM_ERROR_9002.getData());
         }
-        //2.2 验证导演是否存在
+        //2.2 验证演员是否存在
         Performer performer = performerService.findById(id);
         if (performer == null) {
-            return Response.factoryResponse(StatusEnum.DIRECTOR_ERROR_3002.getCode(),StatusEnum.DIRECTOR_ERROR_3002.getData());
+            return Response.factoryResponse(StatusEnum.PERFORMER_ERROR_4002.getCode(),StatusEnum.PERFORMER_ERROR_4002.getData());
         }
-        //3.修改导演信息
+        //3.修改演员信息
+        performer.setName(name);
+        performer.setSex(sex);
+        performer.setBirthday(Date.valueOf(birthday));
+        performer.setNationality(nationality);
+        performer.setIntroduction(introduction);
         try {
             performerService.save(performer);
         }catch (Exception e) {
@@ -157,7 +162,7 @@ public class PerformerController {
         //2.查询导演是否存在
         Performer performer = performerService.findById(id);
         if (performer == null) {
-            return Response.factoryResponse(StatusEnum.DIRECTOR_ERROR_3002.getCode(),StatusEnum.DIRECTOR_ERROR_3002.getData());
+            return Response.factoryResponse(StatusEnum.PERFORMER_ERROR_4002.getCode(),StatusEnum.PERFORMER_ERROR_4002.getData());
         }
         return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),performer);
     }

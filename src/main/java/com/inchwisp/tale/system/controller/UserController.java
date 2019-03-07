@@ -88,8 +88,19 @@ public class UserController {
      * @return com.inchwisp.tale.framework.entity.Response
      **/
     @PostMapping("/register")
-    @Permission(PermissionConstants.USER_ROLE_ADMIN)
+    //@Permission(PermissionConstants.USER_ROLE_ADMIN)
     public Response register(@RequestBody JSONObject data) {
+        /**
+         * data ：{
+         * 	"account":"test",
+         * 	"name":"test111",
+         * 	"password":"test111",
+         * 	"passwordRetry":"test111",
+         * 	"phone":"13012345679",
+         * 	"email":"12345678@qq.com",
+         * 	"roleName":"管理员用户"
+         * }
+         **/
         //1、获取数据
         String account = data.getString("account");
         String password = data.getString("password");
@@ -101,12 +112,11 @@ public class UserController {
         if (CommUtil.isNullString(account,password,passwordRetry,name,phone)) {
             return Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9002.getCode(),StatusEnum.SYSTEM_ERROR_9002.getData());
         }
-        //3、验证用户是否可以注册
-        //3.1用户已存在
+        //2.2用户已存在,查一下
         if (userService.findByAccountOrPhone(account,phone) != null) {
             return Response.factoryResponse(StatusEnum.USER_ERROR_1004.getCode(),StatusEnum.USER_ERROR_1004.getData());
         }
-        //3.2两次输入密码不一致
+        //2.3两次输入密码不一致
         if (!password.equals(passwordRetry)) {
             return Response.factoryResponse(StatusEnum.USER_ERROR_1003.getCode(),StatusEnum.USER_ERROR_1003.getData());
         }
@@ -117,7 +127,7 @@ public class UserController {
         user.setName(name);
         user.setPhone(phone);
         user.setEmail(email);
-        user.setRoleName(ConstantsEnum.USER_ROLE_USER.getData());
+        user.setRoleName(PermissionConstants.USER_ROLE_ADMIN);
         //4、调用Service，新增用户
         try {
             userService.saveUser(user);

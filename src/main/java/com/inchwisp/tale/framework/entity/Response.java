@@ -7,10 +7,6 @@ package com.inchwisp.tale.framework.entity;
  * @Date:  2018/12/23  15:38
  * @Vresion: 1.0.0
  **/
-/**
-
- * by lcm 2018/12/23
- */
 public class Response {
 
     private Object code;    //返回结果代码

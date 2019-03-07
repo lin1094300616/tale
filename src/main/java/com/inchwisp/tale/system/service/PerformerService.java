@@ -16,7 +16,11 @@ import java.util.List;
  **/
 public interface PerformerService {
 
+    List<Performer> findByIdIn(List<Long> id);
+
     Performer findByNameAndBirthday(String name,Date birthday);
+
+    Page<Performer> pagePerformer(Pageable pageable);
 
     void save(Performer performer);
 
@@ -25,6 +29,4 @@ public interface PerformerService {
     Performer findById(Long id);
 
     List findAll();
-
-    Page<Performer> pagePerformer(Pageable pageable);
 }

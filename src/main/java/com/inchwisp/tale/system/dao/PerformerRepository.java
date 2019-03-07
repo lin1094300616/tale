@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
+import java.util.List;
 
 /**
  * @ClassName: PerformerRepository
@@ -15,6 +16,8 @@ import java.sql.Date;
  **/
 @Repository
 public interface PerformerRepository extends JpaRepository<Performer,Long> {
+
+    List<Performer> findAllByIdIn(List<Long> id);
 
     Performer findByNameAndBirthday(String name, Date birthday);
 }

@@ -26,6 +26,11 @@ public class PerformerServiceImp implements PerformerService {
     PerformerRepository performerRepository;
 
     @Override
+    public List<Performer> findByIdIn(List<Long> id) {
+        return performerRepository.findAllByIdIn(id);
+    }
+
+    @Override
     public Performer findByNameAndBirthday(String name, Date birthday) {
         return performerRepository.findByNameAndBirthday(name, birthday);
     }
