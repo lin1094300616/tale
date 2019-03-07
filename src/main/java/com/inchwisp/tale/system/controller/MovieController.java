@@ -69,6 +69,7 @@ public class MovieController {
         movie.setLasts(Date.valueOf(lasts));
         movie.setReleaseDate(Date.valueOf(releaseDate));
         movie.setPerformers(performerList);
+        //3 保存电影
         try {
             movieService.save(movie);
         }catch (Exception e) {
