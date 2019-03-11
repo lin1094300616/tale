@@ -14,7 +14,7 @@ public enum StatusEnum {
 
     SYSTEM_ERROR_9999("9999","系统抛出异常"),SYSTEM_ERROR_9001("9001","登录超时，请重新登录"),
     SYSTEM_ERROR_9002("9002","请求数据不完整"),SYSTEM_ERROR_9003("9003","权限不足"),
-    SYSTEM_ERROR_9004("9004","文件存储异常"),
+    SYSTEM_ERROR_9004("9004","文件存储异常"),SYSTEM_ERROR_9005("9005","请求方法未写映射注解"),
 
     RET_INSERT_FAIL("A001","新增数据库记录失败"),RET_UPDATE_FAIL("A002","修改数据库记录失败"),
     RET_DELETE_FAIL("A003","删除数据库记录失败"),

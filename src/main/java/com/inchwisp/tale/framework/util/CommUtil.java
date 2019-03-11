@@ -1,6 +1,8 @@
 package com.inchwisp.tale.framework.util;
 
-import java.util.HashSet;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -66,6 +68,36 @@ public class CommUtil {
         }
         //3.返回集合
         return longList;
+    }
+
+    /**
+     * @Author MSI
+     * @Description 字符串转换Date 方法，默认格式为 "yyyy-MM-dd HH:mm:ss"
+     * @Content: TODO
+     * @Date 2019/3/9 17:21
+     * @Param [stringDate]
+     * @return java.util.Date
+     **/
+    public static Date stringToDate(String stringDate,String template) {
+        SimpleDateFormat formatter = new SimpleDateFormat(template);
+        ParsePosition pos = new ParsePosition(0);
+        Date date = formatter.parse(stringDate, pos);
+        return date;
+    }
+
+    /**
+     * @Author MSI
+     * @Description Date 转换字符串方法，默认格式为 "yyyy-MM-dd HH:mm:ss"
+     * @Content: TODO
+     * @Date 2019/3/9 17:20
+     * @Param [date]
+     * @return java.lang.String
+     **/
+    public static String dateToString(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String stringDate = sdf.format(date);
+        System.out.println("stringDate : " + stringDate);
+        return stringDate;
     }
 
 }

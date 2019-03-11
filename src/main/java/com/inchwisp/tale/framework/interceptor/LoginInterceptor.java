@@ -44,6 +44,13 @@ public class LoginInterceptor implements HandlerInterceptor {
             return false;
         }
         //2、判断用户是否拥有权限，如果没有就返回信息
+        if (!(handler instanceof HandlerMethod)) {
+            PrintWriter printWriter = response.getWriter();
+            Response res = Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9005.getCode(),StatusEnum.SYSTEM_ERROR_9005.getData());
+            printWriter.append(JSONObject.toJSONString(res));
+            return false;
+        }
+
         if(!isPermission(handler,user)) {
             PrintWriter printWriter = response.getWriter();
             Response res = Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9003.getCode(),StatusEnum.SYSTEM_ERROR_9003.getData());
@@ -67,7 +74,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             //2、获得访问方法的Permission 注解获得权限。
             Permission permission = handlerMethod.getMethod().getAnnotation(Permission.class);
             //4、判断访问路径是否需要权限以及用户是否有此权限
-            if (permission == null) {
+            if (permission == null || "管理员".equals(user.getRoleName())) {
                 return true;
             }
             System.out.println("permission.value() = " + permission.value());

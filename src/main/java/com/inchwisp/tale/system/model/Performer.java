@@ -1,9 +1,11 @@
 package com.inchwisp.tale.system.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @ClassName: Performer
@@ -40,6 +42,7 @@ public class Performer {
     private String introduction; //简介
 
     @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY,mappedBy = "performers")
+    @JsonBackReference
     private List<Movie> movies; //电影集合
 
     public Long getId() {

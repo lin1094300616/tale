@@ -1,5 +1,8 @@
 package com.inchwisp.tale.system.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -44,9 +47,10 @@ public class Movie {
     @Temporal(TemporalType.DATE)
     private Date releaseDate; //上映时间
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createTime; //上架时间
+    private Date createTime = new Date(); //上架时间
 
     @ManyToOne(cascade = CascadeType.REFRESH,fetch = FetchType.EAGER,optional = true)
+    @JsonBackReference
     private Director director; //关联导演ID
 
     /*@JoinTable(
@@ -55,6 +59,7 @@ public class Movie {
             inverseJoinColumns = {@JoinColumn(name = "performer",referencedColumnName = "movie")}
     )*/
     @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
+    @JsonBackReference
     private List<Performer> performers; //演员ID，多对多
 
     public Long getId() {

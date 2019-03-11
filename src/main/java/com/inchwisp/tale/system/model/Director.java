@@ -1,5 +1,7 @@
 package com.inchwisp.tale.system.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
@@ -16,8 +18,6 @@ import java.util.Set;
 @Table(name = "director")
 public class Director {
 
-    //@Id @GeneratedValue()
-    //@Column(length = 8)
     @Id
     @TableGenerator(name="DIRECTOR_GENERATOR",
             table="PK_GENERATOR",
