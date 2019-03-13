@@ -34,13 +34,18 @@ public class FileUtil {
         System.out.println("path = " + path);
         //3.判断文件是否为jpg、jpeg、png、bmp
         String fileName = multipartFile.getOriginalFilename();
+        File file = new File(path);
+        if(!file.exists()){
+            file.mkdirs();
+        }
         System.out.println("fileName = " + fileName);
         if (!isImageFile(fileName)) {
             return null;
         }
         //4.生成新文件名，UUID+文件名
         String newFileName = UUID.randomUUID().toString().replace("-","") + fileName;
-        File file = new File(path + newFileName);
+        file = new File(path + newFileName);
+
         System.out.println("newFileName = " + newFileName);
         //5.try 保存文件
         try {

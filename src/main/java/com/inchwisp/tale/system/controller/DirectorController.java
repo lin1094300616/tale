@@ -69,7 +69,7 @@ public class DirectorController {
         director.setIntroduction(introduction);
         //3.调用工具类，保存图片
         String fileName = FileUtil.fileUpload("director",multipartFile);
-        if (fileName == null) {
+        if (CommUtil.isNullString(fileName)) {
             return Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9004.getCode(),StatusEnum.SYSTEM_ERROR_9004.getData());
         }
         System.out.println("fileName = " + fileName);

@@ -1,5 +1,6 @@
 package com.inchwisp.tale.system.service.Imp;
 
+import com.inchwisp.tale.framework.util.FileUtil;
 import com.inchwisp.tale.system.dao.PerformerRepository;
 import com.inchwisp.tale.system.model.Performer;
 import com.inchwisp.tale.system.service.PerformerService;
@@ -7,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +44,9 @@ public class PerformerServiceImp implements PerformerService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(Performer performer) {
+        FileUtil.deleteDir(new File(performer.getImage()));
         performerRepository.delete(performer);
     }
 

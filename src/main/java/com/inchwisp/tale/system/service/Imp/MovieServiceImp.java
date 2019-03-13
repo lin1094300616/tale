@@ -1,5 +1,6 @@
 package com.inchwisp.tale.system.service.Imp;
 
+import com.inchwisp.tale.framework.util.FileUtil;
 import com.inchwisp.tale.system.dao.MovieRepository;
 import com.inchwisp.tale.system.model.Movie;
 import com.inchwisp.tale.system.service.MovieService;
@@ -7,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,7 +51,9 @@ public class MovieServiceImp implements MovieService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(Movie movie) {
+        FileUtil.deleteDir(new File(movie.getImage()));
         movieRepository.delete(movie);
     }
 

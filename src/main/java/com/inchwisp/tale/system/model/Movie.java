@@ -59,7 +59,7 @@ public class Movie {
             inverseJoinColumns = {@JoinColumn(name = "performer",referencedColumnName = "movie")}
     )*/
     @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
-    @JsonBackReference
+    //@JsonBackReference
     private List<Performer> performers; //演员ID，多对多
 
     public Long getId() {
