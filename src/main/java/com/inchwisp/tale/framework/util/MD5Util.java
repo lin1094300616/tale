@@ -36,9 +36,12 @@ public class MD5Util {
             int k = 0;
             //每次取密文字节数组的一个值，根据其二进制值找到密文字符，写入成加密后的报文
             for (int i = 0; i < j; i++) {
-                byte byte0 = md[i];     // 假设此时md[i]的值是100，转换成二进制是 0110 0100
-                str[k++] = hexDigits[byte0 >>> 4 & 0xf];    //取0110，十进制为6，对应字符 '5'
-                str[k++] = hexDigits[byte0 & 0xf];          //取0110，十进制为4，对应字符 '3'，所以写入的是'5'和'3'
+                /**假设此时md[i]的值是100，转换成二进制是 0110 0100**/
+                byte byte0 = md[i];
+                /**取0110，十进制为6，对应字符 '5'**/
+                str[k++] = hexDigits[byte0 >>> 4 & 0xf];
+                /**取0110，十进制为4，对应字符 '3'，所以写入的是'5'和'3'**/
+                str[k++] = hexDigits[byte0 & 0xf];
             }
             return new String(str).toLowerCase();
         } catch (Exception e) {

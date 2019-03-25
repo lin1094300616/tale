@@ -31,8 +31,10 @@ public class Movie {
     )
     @GeneratedValue(strategy=GenerationType.TABLE, generator="USER_GENERATOR")
     private Long id;
-    private String name; //名称
-    private String alias = "无"; //别名
+    /**名称**/
+    private String name;
+    /**别名**/
+    private String alias = "无";
     private String region; //地区
     private String language; //语言
     private String tag; //标签

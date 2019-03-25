@@ -91,8 +91,10 @@ public class FileUtil {
      * @return boolean  是否删除成功
      **/
     public static boolean deleteDir(File dir) {
-        if (dir.isDirectory()) { //判断是否是目录，如果不是目录，则直接删除
-            String[] children = dir.list(); //获得文件夹下面的子目录
+        /**判断是否是目录，如果不是目录，则直接删除**/
+        if (dir.isDirectory()) {
+            /**获得文件夹下面的子目录**/
+            String[] children = dir.list();
             //递归删除目录中的子目录
             for (int i=0; i<children.length; i++) {
                 boolean success = deleteDir(new File(dir, children[i]));
