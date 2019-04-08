@@ -3,9 +3,8 @@ package com.inchwisp.tale.system.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @ClassName: Director
@@ -32,8 +31,9 @@ public class Director {
     private String name; //姓名
     @Column(length = 1)
     private String sex; //性别
-    @Column(columnDefinition = "DATE")
-    private Date birthday; //出生日期
+//    @Column(columnDefinition = "DATE")
+//    private Date birthday; //出生日期
+    private String birthday; //出生日期
     private String nationality; //国籍
     private String image; //头像路径
     ///——简介采用文本类型的JPA注解
@@ -69,11 +69,11 @@ public class Director {
         this.sex = sex;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 

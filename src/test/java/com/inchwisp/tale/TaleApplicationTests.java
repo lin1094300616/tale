@@ -17,13 +17,16 @@ public class TaleApplicationTests {
     @Test
     public void contextLoads() {
 
-        File file = new File(ConstantsEnum.UPLOAD + "movie" + "\\" + "aa.txt");
+        /*File file = new File(ConstantsEnum.UPLOAD + "movie" + "\\" + "aa.txt");
         if(!file.exists()){
             file.mkdirs();
-        }
+        }*/
 
         /*Date date = CommUtil.stringToDate(string);
         System.out.println("date = " + date);*/
+
+        String testString = "\"2019-04-07T16:00:00.000Z\"";
+        String test = CommUtil.simplifyDateString(testString);
 
     }
 

@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
-
 /**
  * @ClassName: DirectorRepository
  * @Description: TODO
@@ -19,7 +17,7 @@ import java.sql.Date;
 @Repository
 public interface DirectorRepository extends JpaRepository<Director,Long> {
 
-    Director findByNameAndBirthday(String name,Date birthday);
+    Director findByNameAndBirthday(String name,String birthday);
 
     /**
      * @Author MSI

@@ -2,9 +2,12 @@ package com.inchwisp.tale.framework.util;
 
 import com.inchwisp.tale.framework.entity.ConstantsEnum;
 import org.springframework.web.multipart.MultipartFile;
+import sun.misc.BASE64Encoder;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.UUID;
 
 /**
@@ -15,6 +18,26 @@ import java.util.UUID;
  * @Vresion: 1.0.0
  **/
 public class FileUtil {
+
+    //图片转化成base64字符串
+    public static String getImageString(MultipartFile multipartFile) {
+        //1.判断文件是否存在
+        if (multipartFile == null || multipartFile.isEmpty()) {
+            return null;
+        }
+        byte[] data = null;
+        try {
+            InputStream inputStream = multipartFile.getInputStream();
+            data = new byte[inputStream.available()];
+            inputStream.read(data);
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // base加密
+        BASE64Encoder encoder = new BASE64Encoder();
+        return "data:image/jpeg;base64," + encoder.encode(data);
+    }
 
     /**
      * @Author MSI

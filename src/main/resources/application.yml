@@ -13,3 +13,7 @@ spring:
     hibernate:
       ddl-auto: update  # 第一次create  第二次update
     show-sql: true
+prop:
+  upload-folder: D:\IDEAwork\tale\upload\\
+server:
+  port: 8086

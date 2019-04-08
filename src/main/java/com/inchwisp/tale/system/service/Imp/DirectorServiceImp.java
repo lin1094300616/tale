@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +41,7 @@ public class DirectorServiceImp implements DirectorService {
      * @return Director
      **/
     @Override
-    public Director findByNameAndBirthday(String name, Date birthday) {
+    public Director findByNameAndBirthday(String name, String birthday) {
         return directorRepository.findByNameAndBirthday(name,birthday);
     }
 
@@ -58,7 +58,7 @@ public class DirectorServiceImp implements DirectorService {
     @Transactional(rollbackFor = Exception.class) //三个步骤事务相关，必须全部完成或全部不完成
     public void deleteDirector(Director director) {
         FileUtil.deleteDir(new File(director.getImage())); //删除导演的照片
-        movieRepository.updateOnDirector(director.getId()); //置空此导演关联的电影
+        //movieRepository.updateOnDirector(director.getId()); //置空此导演关联的电影
         directorRepository.delete(director); //删除导演
     }
 

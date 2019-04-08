@@ -87,7 +87,7 @@ public class CommUtil {
 
     /**
      * @Author MSI
-     * @Description Date 转换字符串方法，默认格式为 "yyyy-MM-dd HH:mm:ss"
+     * @Description Date 转换字符串方法，默认格式为 "yyyy-MM-dd HH:mm:ss"  简化
      * @Content: TODO
      * @Date 2019/3/9 17:20
      * @Param [date]
@@ -100,4 +100,10 @@ public class CommUtil {
         return stringDate;
     }
 
+    public static String simplifyDateString(String dateString) {
+        String simpilfyDate;
+        simpilfyDate = dateString.substring(1,11) + " " + dateString.substring(12,dateString.length()-6);
+        System.out.println("simpilfyDate = " + simpilfyDate);
+        return simpilfyDate;
+    }
 }

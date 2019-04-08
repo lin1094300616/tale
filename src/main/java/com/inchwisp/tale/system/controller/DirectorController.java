@@ -19,8 +19,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: DirectorController
@@ -30,10 +34,50 @@ import java.util.List;
  * @Vresion: 1.0.0
  **/
 @RestController
+@CrossOrigin("*")
 public class DirectorController {
 
     @Autowired
     DirectorService directorService;
+
+    @PostMapping("/directorTest")
+    @Permission(PermissionConstants.USER_ROLE_ADMIN)
+    public Response saveDirectorTest(@RequestParam("name") String name,
+                                  @RequestParam("sex") String sex,
+                                  @RequestParam("birthday") String birthday,
+                                  @RequestParam("nationality") String nationality,
+                                  @RequestParam("introduction") String introduction,
+                                  @RequestParam("fileList")MultipartFile fileList) {
+        //1.1 验证数据完整性，参数是否完整
+        if (CommUtil.isNullString(name,sex,birthday,nationality,introduction)) {
+            return Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9002.getCode(),StatusEnum.SYSTEM_ERROR_9002.getData());
+        }
+        //1.2 验证导演是否存在
+        if(directorService.findByNameAndBirthday(name,birthday) != null) {
+            return Response.factoryResponse(StatusEnum.DIRECTOR_ERROR_3001.getCode(),StatusEnum.DIRECTOR_ERROR_3001.getData());
+        }
+        //2.封装数据
+        Director director = new Director();
+        director.setName(name);
+        director.setSex(sex);
+        director.setBirthday(birthday);
+        director.setNationality(nationality);
+        director.setIntroduction(introduction);
+        //3.调用工具类，保存图片
+        String imageString = FileUtil.getImageString(fileList);
+        if (CommUtil.isNullString(imageString)) {
+            return Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9004.getCode(),StatusEnum.SYSTEM_ERROR_9004.getData());
+        }
+        director.setImage(imageString);
+        //4.写入图片路径，保存导演信息
+        try {
+            directorService.saveDirector(director);
+        }catch (Exception e) {
+            return Response.factoryResponse(StatusEnum.RET_INSERT_FAIL.getCode(),StatusEnum.RET_INSERT_FAIL.getData());
+        }
+        Response response = Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
+        return response;
+    }
 
     /**
      * @Author MSI
@@ -45,30 +89,31 @@ public class DirectorController {
      **/
     @PostMapping("/director")
     @Permission(PermissionConstants.USER_ROLE_ADMIN)
-    public Response saveDirector(@RequestParam("name") String name,
+    public Response saveDirector2(@RequestParam("name") String name,
                                  @RequestParam("sex") String sex,
                                  @RequestParam("birthday") String birthday,
                                  @RequestParam("nationality") String nationality,
                                  @RequestParam("introduction") String introduction,
-                                 @RequestParam("image")MultipartFile multipartFile) {
-        System.out.println("multipartFile = " + multipartFile.getOriginalFilename());
+                                 @RequestParam("fileList")MultipartFile fileList) {
+        System.out.println("multipartFile = " + fileList.getOriginalFilename());
         //1.1 验证数据完整性，参数是否完整
         if (CommUtil.isNullString(name,sex,birthday,nationality,introduction)) {
             return Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9002.getCode(),StatusEnum.SYSTEM_ERROR_9002.getData());
         }
         //1.2 验证导演是否存在
-        if(directorService.findByNameAndBirthday(name,Date.valueOf(birthday)) != null) {
+        //String birthday2 = CommUtil.simplifyDateString(birthday);
+        if(directorService.findByNameAndBirthday(name,birthday) != null) {
             return Response.factoryResponse(StatusEnum.DIRECTOR_ERROR_3001.getCode(),StatusEnum.DIRECTOR_ERROR_3001.getData());
         }
         //2.封装数据
         Director director = new Director();
         director.setName(name);
         director.setSex(sex);
-        director.setBirthday(Date.valueOf(birthday));
+        director.setBirthday(birthday);
         director.setNationality(nationality);
         director.setIntroduction(introduction);
         //3.调用工具类，保存图片
-        String fileName = FileUtil.fileUpload("director",multipartFile);
+        String fileName = FileUtil.fileUpload("director",fileList);
         if (CommUtil.isNullString(fileName)) {
             return Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9004.getCode(),StatusEnum.SYSTEM_ERROR_9004.getData());
         }
@@ -80,7 +125,8 @@ public class DirectorController {
         }catch (Exception e) {
             return Response.factoryResponse(StatusEnum.RET_INSERT_FAIL.getCode(),StatusEnum.RET_INSERT_FAIL.getData());
         }
-        return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
+        Response response = Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),StatusEnum.RESPONSE_OK.getData());
+        return response;
     }
 
     /**
@@ -142,7 +188,7 @@ public class DirectorController {
         //3.修改导演信息
         director.setName(name);
         director.setSex(sex);
-        director.setBirthday(Date.valueOf(birthday));
+        director.setBirthday(birthday);
         director.setNationality(nationality);
         director.setIntroduction(introduction);
         try {
@@ -197,7 +243,7 @@ public class DirectorController {
      * @Param [page, size, name]
      * @return com.inchwisp.tale.framework.entity.Response
      **/
-    @GetMapping("/director/list")
+    @GetMapping("/director/list2")
     public Response searchDirector(@RequestParam(value = "page") Integer page,
                                    @RequestParam(value = "size") Integer size,
                                    @RequestParam(value = "name") String name) {
@@ -207,5 +253,15 @@ public class DirectorController {
         Page<Director> directorPage = directorService.pageDirector(name,pageable);
         JSONObject data = PageUtil.pageInfo(directorPage);
         return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),data);
+    }
+
+    @GetMapping("/director/list")
+    public JSONObject searchDirector() {
+        List<Director> directorList = directorService.findAll();
+        //return Response.factoryResponse(StatusEnum.RESPONSE_OK.getCode(),directorList);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code",0);
+        jsonObject.put("data",directorList);
+        return jsonObject;
     }
 }

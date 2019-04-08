@@ -4,7 +4,7 @@ import com.inchwisp.tale.system.model.Director;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +16,7 @@ import java.util.List;
  **/
 public interface DirectorService {
 
-    Director findByNameAndBirthday(String name, Date birthday);
+    Director findByNameAndBirthday(String name, String birthday);
 
     Page<Director> pageDirector(String name, Pageable pageable);
 

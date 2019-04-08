@@ -31,6 +31,7 @@ public class UserController {
     @Autowired //Spring自动装配  Controller Service Dao Bean
     UserService userService; //注入userService
 
+
     /**
      * @Author MSI
      * @Description 用户登陆

@@ -30,35 +30,35 @@ public class LoginInterceptor implements HandlerInterceptor {
      * @Param [request, response, handler]
      * @return boolean 
      **/       
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
-        //1、判断用户存在session中
-        User user = (User) request.getSession().getAttribute("user");
-        if (user == null) {
-            //1.1、用户不存在，写入错误信息并返回
-            PrintWriter printWriter = response.getWriter();
-            Response res = Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9001.getCode(),StatusEnum.SYSTEM_ERROR_9001.getData());
-            printWriter.append(JSONObject.toJSONString(res));
-            return false;
-        }
-        //2、判断用户是否拥有权限，如果没有就返回信息
-        if (!(handler instanceof HandlerMethod)) {
-            PrintWriter printWriter = response.getWriter();
-            Response res = Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9005.getCode(),StatusEnum.SYSTEM_ERROR_9005.getData());
-            printWriter.append(JSONObject.toJSONString(res));
-            return false;
-        }
-
-        if(!isPermission(handler,user)) {
-            PrintWriter printWriter = response.getWriter();
-            Response res = Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9003.getCode(),StatusEnum.SYSTEM_ERROR_9003.getData());
-            printWriter.append(JSONObject.toJSONString(res));
-            return false;
-        }
-         return true;
-    }
+//    @Override
+//    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
+//        response.setCharacterEncoding("UTF-8");
+//        response.setContentType("application/json; charset=utf-8");
+//        //1、判断用户存在session中
+//        User user = (User) request.getSession().getAttribute("user");
+//        if (user == null) {
+//            //1.1、用户不存在，写入错误信息并返回
+//            PrintWriter printWriter = response.getWriter();
+//            Response res = Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9001.getCode(),StatusEnum.SYSTEM_ERROR_9001.getData());
+//            printWriter.append(JSONObject.toJSONString(res));
+//            return false;
+//        }
+//        //2、判断用户是否拥有权限，如果没有就返回信息
+//        if (!(handler instanceof HandlerMethod)) {
+//            PrintWriter printWriter = response.getWriter();
+//            Response res = Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9005.getCode(),StatusEnum.SYSTEM_ERROR_9005.getData());
+//            printWriter.append(JSONObject.toJSONString(res));
+//            return false;
+//        }
+//
+//        if(!isPermission(handler,user)) {
+//            PrintWriter printWriter = response.getWriter();
+//            Response res = Response.factoryResponse(StatusEnum.SYSTEM_ERROR_9003.getCode(),StatusEnum.SYSTEM_ERROR_9003.getData());
+//            printWriter.append(JSONObject.toJSONString(res));
+//            return false;
+//        }
+//         return true;
+//    }
 
     /**
      * @Author MSI
